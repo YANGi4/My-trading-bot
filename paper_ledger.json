@@ -1,0 +1,11 @@
+{
+  "starting_equity": 10000,
+  "cash": 10000,
+  "equity": 10000,
+  "positions": [],
+  "daily_trades_AAPL": 0,
+  "daily_trades_TTWO": 0,
+  "total_trades_today": 0,
+  "last_reset_day": "2026-10-07",
+  "trade_history": []
+}
