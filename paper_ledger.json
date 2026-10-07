@@ -1,1 +1,25 @@
-{"cash": 10000, "equity": 10000, "positions": [], "trade_history": [], "daily_counts": {}}
+{
+  "cash": 9664.850006103516,
+  "equity": 10000.0,
+  "positions": [
+    {
+      "symbol": "AAPL",
+      "entry": 335.1499938964844,
+      "qty": 1,
+      "time": "2026-10-07T16:27:51.457092+00:00"
+    }
+  ],
+  "trade_history": [
+    {
+      "time": "2026-10-07T16:27:51.457110+00:00",
+      "symbol": "AAPL",
+      "action": "BUY",
+      "price": 335.1499938964844,
+      "qty": 1,
+      "reason": "RSI 62.6"
+    }
+  ],
+  "daily_counts": {
+    "2026-10-07_AAPL": 1
+  }
+}
