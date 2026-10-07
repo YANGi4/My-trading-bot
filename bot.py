@@ -132,7 +132,7 @@ def main():
             
             print(f"{symbol}: ${price:.2f} RSI {rsi_last:.1f} conf {conf:.2f} need {cfg['conf']}")
             
-            if conf >= cfg["conf"] and rsi_last < 85:
+            if rsi_last < 85:
                 print(f"*** BUY {symbol} 1 share (School Balance ${STARTING_BALANCE}) ***")
                 if use_alpaca:
                     try:
