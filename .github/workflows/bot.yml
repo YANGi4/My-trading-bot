@@ -1,7 +1,7 @@
 name: trade
 on:
   schedule:
-    - cron: '*/5 13-20 * * 1-5'
+    - cron: '*/10 13-20 * * 1-5'
   workflow_dispatch:
 
 jobs:
