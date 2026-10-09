@@ -1,8 +1,8 @@
 name: trade
 on:
   schedule:
-    - cron: '*/5 13-20 * * 1-5'  # every 5 min during US market 8:00 PM - 2:30 AM Myanmar time, Mon-Fri
-  workflow_dispatch:  # allows manual Run button
+    - cron: '*/5 13-20 * * 1-5'
+  workflow_dispatch:
 
 jobs:
   trade:
@@ -13,7 +13,7 @@ jobs:
         with:
           python-version: '3.11'
       - run: pip install -r requirements.txt
-      - run: python bot.py
+      - run: python -u bot.py
         env:
           ALPACA_API_KEY: ${{ secrets.ALPACA_API_KEY }}
           ALPACA_SECRET_KEY: ${{ secrets.ALPACA_SECRET_KEY }}
