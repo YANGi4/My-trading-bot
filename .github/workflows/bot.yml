@@ -1,14 +1,12 @@
 name: trade
 on:
   schedule:
-    - cron: '*/15 13-20 * * 1-5'
-  workflow_dispatch:
+    - cron: '*/5 13-20 * * 1-5'  # every 5 min during US market 8:00 PM - 2:30 AM Myanmar time, Mon-Fri
+  workflow_dispatch:  # allows manual Run button
 
 jobs:
   trade:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -19,10 +17,4 @@ jobs:
         env:
           ALPACA_API_KEY: ${{ secrets.ALPACA_API_KEY }}
           ALPACA_SECRET_KEY: ${{ secrets.ALPACA_SECRET_KEY }}
-          ALPACA_BASE_URL: ${{ secrets.ALPACA_BASE_URL }}
-      - run: |
-          git config user.name "bot"
-          git config user.email "bot@bot.com"
-          git add state.json || true
-          git diff --cached --quiet || git commit -m "save state"
-          git push || true
+          ALPACA_BASE_URL: https://paper-api.alpaca.markets
