@@ -1,1 +1,20 @@
-{"TTWO": {"max_price": 213.705, "entry": 1791492212.9342878}}
+{
+  "TTWO": {
+    "positions": [
+      {
+        "entry": 1791571805.766451,
+        "entry_price": 214.23,
+        "max_price": 214.23
+      }
+    ]
+  },
+  "AAPL": {
+    "positions": [
+      {
+        "entry": 1791571805.766451,
+        "entry_price": 337.13,
+        "max_price": 337.13
+      }
+    ]
+  }
+}
