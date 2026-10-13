@@ -12,5 +12,14 @@
         "max_price": 214.1
       }
     ]
+  },
+  "AAPL": {
+    "positions": [
+      {
+        "entry": 1791898532.053815,
+        "entry_price": 347.485,
+        "max_price": 347.485
+      }
+    ]
   }
 }
