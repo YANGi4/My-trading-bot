@@ -9,7 +9,7 @@ from alpaca.data.timeframe import TimeFrame
 
 CONFIG = {
     "AAPL": {"max_open": 2, "min_profit": 0.003, "stop_loss": -0.05, "max_hold_h": 24},
-    "TTWO": {"max_open": 2, "min_profit": 0.003, "peak_gain": 0.20, "drop_from_peak": 0.08, "stop_loss": -0.07, "max_hold_h": 168},
+    "TTWO": {"max_open": 2, "min_profit": 0.003, "peak_gain": 0.02, "drop_from_peak": 0.005, "stop_loss": -0.02, "max_hold_h": 168},
 }
 
 SLIPPAGE = 0.001
