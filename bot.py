@@ -145,16 +145,13 @@ for symbol, cfg in CONFIG.items():
         if gross <= cfg["stop_loss"]:
             sell = True
             reason = f"STOP {gross*100:.2f}%"
-        if symbol == "TTWO":
+                if symbol == "TTWO":
             peak = (max_p - entry) / entry if entry else 0
             drop = (max_p - price) / max_p if max_p else 0
             if peak >= cfg["peak_gain"]:
                 if drop >= cfg["drop_from_peak"]:
                     sell = True
                     reason = f"TTWO peak +{peak*100:.1f}% drop {drop*100:.1f}%"
-                else:
-                    if real < 0.15:
-                        sell = False
         if hold_h >= cfg["max_hold_h"]:
             sell = True
             reason = f"max hold {hold_h:.1f}h"
