@@ -2,14 +2,14 @@
   "TTWO": {
     "positions": [
       {
-        "entry": 1791571805.766451,
-        "entry_price": 214.23,
-        "max_price": 214.23
-      },
-      {
         "entry": 1791572144.932654,
         "entry_price": 214.1,
         "max_price": 214.1
+      },
+      {
+        "entry": 1791911446.632631,
+        "entry_price": 198.76,
+        "max_price": 198.76
       }
     ]
   },
