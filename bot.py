@@ -145,7 +145,7 @@ for symbol, cfg in CONFIG.items():
         if gross <= cfg["stop_loss"]:
             sell = True
             reason = f"STOP {gross*100:.2f}%"
-                if symbol == "TTWO":
+        if symbol == "TTWO":
             peak = (max_p - entry) / entry if entry else 0
             drop = (max_p - price) / max_p if max_p else 0
             if peak >= cfg["peak_gain"]:
