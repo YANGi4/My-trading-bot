@@ -9,21 +9,21 @@
       {
         "entry": 1791985550.096002,
         "entry_price": 345.65,
-        "max_price": 345.65
+        "max_price": 346.095
       }
     ]
   },
   "TTWO": {
     "positions": [
       {
-        "entry": 1791985244.495815,
-        "entry_price": 204.27,
-        "max_price": 204.78
-      },
-      {
         "entry": 1791985550.096002,
         "entry_price": 204.78,
         "max_price": 204.78
+      },
+      {
+        "entry": 1791985851.74555,
+        "entry_price": 206.4,
+        "max_price": 206.4
       }
     ]
   }
