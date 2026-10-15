@@ -2,12 +2,12 @@
   "TTWO": {
     "positions": [
       {
-        "entry": 1792078062.131323,
-        "entry_price": 208.415,
-        "max_price": 209.81
+        "entry": 1792090244.359652,
+        "entry_price": 210.19,
+        "max_price": 210.19
       }
     ],
-    "daily_pnl": -0.8007700000000114,
+    "daily_pnl": 0.3489849999999942,
     "daily_date": "2026-10-15"
   },
   "AAPL": {
