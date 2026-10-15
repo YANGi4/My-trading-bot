@@ -9,7 +9,7 @@
       {
         "entry": 1792072245.522035,
         "entry_price": 345.195,
-        "max_price": 345.195
+        "max_price": 346.01
       }
     ]
   },
@@ -21,9 +21,9 @@
         "max_price": 205.675
       },
       {
-        "entry": 1792071950.584729,
-        "entry_price": 203.34,
-        "max_price": 204.03
+        "entry": 1792072533.328223,
+        "entry_price": 205.28,
+        "max_price": 205.28
       }
     ]
   }
