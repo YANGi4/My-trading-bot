@@ -7,18 +7,12 @@
         "max_price": 210.19
       }
     ],
-    "daily_pnl": 0.3489849999999942,
-    "daily_date": "2026-10-15"
+    "daily_pnl": 0.0,
+    "daily_date": "2026-10-16"
   },
   "AAPL": {
-    "positions": [
-      {
-        "entry": 1792077936.197642,
-        "entry_price": 343.55,
-        "max_price": 344.37
-      }
-    ],
-    "daily_pnl": 0.0,
-    "daily_date": "2026-10-15"
+    "positions": [],
+    "daily_pnl": 3.569349999999966,
+    "daily_date": "2026-10-16"
   }
 }
