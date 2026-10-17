@@ -7,15 +7,15 @@ from alpaca.data.historical import StockHistoricalDataClient
 from alpaca.data.requests import StockLatestTradeRequest
 
 CONFIG = {
- # AAPL: after sell at 345, only re-buy if price <= 343.2 (0.5% lower) or lower
- "AAPL": {"max_open": 1, "min_profit": 0.003, "stop_loss": -0.03, "max_hold_h": 24, "daily_loss_limit": -10, "rebuy_dip": 0.005},
- # TTWO: after sell, only re-buy if 0.8% lower than sell
- "TTWO": {"max_open": 1, "min_profit": 0.004, "peak_gain": 0.02, "drop_from_peak": 0.005, "stop_loss": -0.035, "max_hold_h": 168, "daily_loss_limit": -10, "rebuy_dip": 0.008},
+ # Realistic + careful: 0.1% total fees, sell at 0.05% real profit after fees = green after fees
+ "AAPL": {"max_open": 1, "min_profit": 0.0005, "stop_loss": -0.03, "max_hold_h": 24, "daily_loss_limit": -10, "rebuy_dip": 0.005},
+ "TTWO": {"max_open": 1, "min_profit": 0.0005, "peak_gain": 0.02, "drop_from_peak": 0.005, "stop_loss": -0.035, "max_hold_h": 168, "daily_loss_limit": -10, "rebuy_dip": 0.008},
 }
 
-SLIPPAGE = 0.001
-FEE = 0.0005
-BREAKEVEN = (SLIPPAGE + FEE) * 2
+# REALISTIC + CAREFUL FEES (was 0.3% too high, real IRL ~0.03%, we use 0.1% for safety)
+SLIPPAGE = 0.0004  # 0.04% per side
+FEE = 0.0001      # 0.01% per side
+BREAKEVEN = (SLIPPAGE + FEE) * 2  # 0.001 = 0.1% total round trip
 STATE_FILE = "state.json"
 
 trading = TradingClient(os.getenv("ALPACA_API_KEY") or os.getenv("APCA_API_KEY_ID"), os.getenv("ALPACA_SECRET_KEY") or os.getenv("APCA_API_SECRET_KEY"), paper=True)
@@ -76,7 +76,7 @@ for symbol, cfg in CONFIG.items():
     if not price:
         continue
 
-    # SELL
+    # SELL - GREEN AFTER FEES LOGIC
     for idx, pos in enumerate(list(state[symbol]["positions"])):
         entry = pos.get("entry_price", price)
         max_p = pos.get("max_price", price)
@@ -84,10 +84,11 @@ for symbol, cfg in CONFIG.items():
             pos["max_price"] = price
             max_p = price
         gross = (price - entry) / entry if entry else 0
-        real = gross - BREAKEVEN
+        real = gross - BREAKEVEN  # profit AFTER realistic commission + slippage
         hold_h = (now_ts - pos.get("entry", now_ts)) / 3600
         sell = False; reason = ""
-        if real >= cfg["min_profit"]: sell=True; reason=f"profit {real*100:.2f}%"
+        # THIS IS YOUR RULE: sell if green after fees
+        if real >= cfg["min_profit"]: sell=True; reason=f"GREEN AFTER FEES real={real*100:.3f}% gross={gross*100:.3f}%"
         if gross <= cfg["stop_loss"]: sell=True; reason=f"STOP {gross*100:.2f}%"
         if symbol=="TTWO":
             peak=(max_p-entry)/entry if entry else 0; drop=(max_p-price)/max_p if max_p else 0
@@ -95,7 +96,7 @@ for symbol, cfg in CONFIG.items():
         if hold_h >= cfg["max_hold_h"]: sell=True; reason=f"max hold {hold_h:.1f}h"
         if sell:
             state[symbol]["daily_pnl"] += (price-entry) - (BREAKEVEN*entry)
-            print(f"SELL {symbol} 1 - {reason} @ {price:.2f}")
+            print(f"SELL {symbol} 1 - {reason} @ {price:.2f} from {entry:.2f}")
             try:
                 trading.submit_order(MarketOrderRequest(symbol=symbol, qty=1, side=OrderSide.SELL, time_in_force=TimeInForce.DAY))
                 state[symbol]["positions"].pop(idx)
@@ -111,7 +112,7 @@ for symbol, cfg in CONFIG.items():
         if last_sell:
             need_price = last_sell * (1 - cfg["rebuy_dip"])
             if price >= need_price:
-                print(f"{symbol} NO BUY - last sell {last_sell:.2f}, now {price:.2f} - waiting for < {need_price:.2f} (same or lower)")
+                print(f"{symbol} NO BUY - last sell {last_sell:.2f}, now {price:.2f} - waiting for < {need_price:.2f}")
                 continue
         print(f"BUY {symbol} 1 @ {price:.2f} - last sell was {last_sell}")
         try:
@@ -122,4 +123,4 @@ for symbol, cfg in CONFIG.items():
             print(f"Buy err {e}")
 
 save_state(state)
-print("Done")
+print(f"Done - BREAKEVEN {BREAKEVEN*100:.3f}% fees")
