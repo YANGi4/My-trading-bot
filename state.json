@@ -1,6 +1,12 @@
 {
   "AAPL": {
-    "positions": [],
+    "positions": [
+      {
+        "entry": 1792416665.144694,
+        "entry_price": 341.39,
+        "max_price": 341.39
+      }
+    ],
     "daily_pnl": 0.0,
     "daily_date": "2026-10-19",
     "last_sell_price": 343.39,
