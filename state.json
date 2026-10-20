@@ -1,8 +1,8 @@
 {
   "AAPL": {
     "positions": [],
-    "daily_pnl": 1.4973400000000636,
-    "daily_date": "2026-10-19",
+    "daily_pnl": 0.0,
+    "daily_date": "2026-10-20",
     "last_sell_price": 341.85,
     "last_sell_time": 0
   },
@@ -15,7 +15,7 @@
       }
     ],
     "daily_pnl": 0.0,
-    "daily_date": "2026-10-19",
+    "daily_date": "2026-10-20",
     "last_sell_price": null,
     "last_sell_time": 0
   }
