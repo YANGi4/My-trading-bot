@@ -9,6 +9,12 @@
     "daily_date": "2026-10-28",
     "daily_pnl": 0.5477750000000217,
     "last_sell_price": 198.46,
-    "positions": []
+    "positions": [
+      {
+        "entry": 1793214949.908615,
+        "entry_price": 196.82,
+        "max_price": 196.82
+      }
+    ]
   }
 }
