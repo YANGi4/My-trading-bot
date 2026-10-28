@@ -1,13 +1,13 @@
 {
   "AAPL": {
-    "daily_date": "2026-10-27",
+    "daily_date": "2026-10-28",
     "daily_pnl": 0.0,
     "last_sell_price": 343.05,
     "positions": []
   },
   "TTWO": {
-    "daily_date": "2026-10-27",
-    "daily_pnl": 0.6128700000000272,
+    "daily_date": "2026-10-28",
+    "daily_pnl": 0.0,
     "last_sell_price": 201.375,
     "positions": []
   }
