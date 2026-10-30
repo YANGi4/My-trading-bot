@@ -7,14 +7,8 @@
   },
   "TTWO": {
     "daily_date": "2026-10-30",
-    "daily_pnl": 0.0,
-    "last_sell_price": 198.46,
-    "positions": [
-      {
-        "entry": 1793214949.908615,
-        "entry_price": 196.82,
-        "max_price": 196.82
-      }
-    ]
+    "daily_pnl": -9.306819999999986,
+    "last_sell_price": 187.71,
+    "positions": []
   }
 }
