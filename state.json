@@ -3,7 +3,13 @@
     "daily_date": "2026-11-13",
     "daily_pnl": 1.193880000000025,
     "last_sell_price": 358.61,
-    "positions": [],
+    "positions": [
+      {
+        "entry": 1794601536.732399,
+        "entry_price": 356.8,
+        "max_price": 356.8
+      }
+    ],
     "last_sell_time": 1794584026.167056
   },
   "TTWO": {
