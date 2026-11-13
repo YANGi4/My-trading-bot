@@ -1,13 +1,20 @@
 {
   "AAPL": {
-    "daily_date": "2026-11-12",
-    "daily_pnl": 0.2942200000000341,
+    "daily_date": "2026-11-13",
+    "daily_pnl": 0.0,
     "last_sell_price": 356.43,
-    "positions": []
+    "positions": [
+      {
+        "entry": 1794580265.904369,
+        "entry_price": 358.58,
+        "max_price": 358.58
+      }
+    ],
+    "last_sell_time": 0
   },
   "TTWO": {
-    "daily_date": "2026-11-12",
-    "daily_pnl": 0.8638099999999989,
+    "daily_date": "2026-11-13",
+    "daily_pnl": 0.0,
     "last_sell_price": 232.285,
     "positions": [
       {
@@ -15,6 +22,7 @@
         "entry_price": 229.5,
         "max_price": 229.5
       }
-    ]
+    ],
+    "last_sell_time": 0
   }
 }
