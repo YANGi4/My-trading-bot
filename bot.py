@@ -8,14 +8,14 @@ from alpaca.data.requests import StockLatestTradeRequest
 
 CONFIG = {
  # Realistic + careful: 0.1% fees, sell at 0.05% real profit = green after fees
- # Rebuy: dip OR breakout OR timeout (so you don't miss GTA6 rally)
+ # Rebuy: dip OR breakout OR timeout - so you don't miss GTA6 rally
  "AAPL": {"max_open": 1, "min_profit": 0.0005, "stop_loss": -0.03, "max_hold_h": 24, "daily_loss_limit": -10, "rebuy_dip": 0.005, "rebuy_timeout_h": 24, "breakout_buy": 0.01},
  "TTWO": {"max_open": 1, "min_profit": 0.0005, "peak_gain": 0.02, "drop_from_peak": 0.005, "stop_loss": -0.035, "max_hold_h": 168, "daily_loss_limit": -10, "rebuy_dip": 0.008, "rebuy_timeout_h": 48, "breakout_buy": 0.015},
 }
 
-SLIPPAGE = 0.0004  # 0.04% per side
-FEE = 0.0001      # 0.01% per side
-BREAKEVEN = (SLIPPAGE + FEE) * 2  # 0.001 = 0.1% total round trip
+SLIPPAGE = 0.0004
+FEE = 0.0001
+BREAKEVEN = (SLIPPAGE + FEE) * 2  # 0.001 = 0.1%
 STATE_FILE = "state.json"
 
 trading = TradingClient(os.getenv("ALPACA_API_KEY") or os.getenv("APCA_API_KEY_ID"), os.getenv("ALPACA_SECRET_KEY") or os.getenv("APCA_API_SECRET_KEY"), paper=True)
@@ -53,9 +53,21 @@ def get_price(sym):
     except:
         return None
 
+def get_fill_price(order_id):
+    # FIX: use real Alpaca fill price, not stale price from 5:40 PM
+    try:
+        time.sleep(2)
+        o = trading.get_order_by_id(order_id)
+        if o.filled_avg_price:
+            return float(o.filled_avg_price)
+    except:
+        pass
+    return None
+
 state = load_state()
 
-# --- DON'T TRADE WHEN MARKET CLOSED ---
+# --- FIX 1: DON'T TRADE WHEN MARKET CLOSED ---
+# Stops 5:40 PM order sitting 3.5h then filling at different price
 try:
     clock = trading.get_clock()
     if not clock.is_open:
@@ -108,19 +120,21 @@ for symbol, cfg in CONFIG.items():
             if peak >= cfg["peak_gain"] and drop >= cfg["drop_from_peak"]: sell = True; reason = f"TTWO peak {peak*100:.1f}% drop {drop*100:.1f}%"
         if hold_h >= cfg["max_hold_h"]: sell = True; reason = f"max hold {hold_h:.1f}h"
         if sell:
-            state[symbol]["daily_pnl"] += (price - entry) - (BREAKEVEN * entry)
             print(f"SELL {symbol} 1 - {reason} @ {price:.2f} from {entry:.2f}")
             try:
-                trading.submit_order(MarketOrderRequest(symbol=symbol, qty=1, side=OrderSide.SELL, time_in_force=TimeInForce.DAY))
+                order = trading.submit_order(MarketOrderRequest(symbol=symbol, qty=1, side=OrderSide.SELL, time_in_force=TimeInForce.DAY))
+                # Use real fill price for pnl + last_sell
+                fill = get_fill_price(order.id) or price
+                state[symbol]["daily_pnl"] += (fill - entry) - (BREAKEVEN * entry)
                 state[symbol]["positions"].pop(idx)
-                state[symbol]["last_sell_price"] = price
+                state[symbol]["last_sell_price"] = fill
                 state[symbol]["last_sell_time"] = now_ts
                 time.sleep(1)
             except Exception as e:
                 print(f"Sell err {e}")
             break
 
-    # BUY - DIP OR BREAKOUT OR TIMEOUT (FOMO FIX)
+    # BUY - DIP OR BREAKOUT OR TIMEOUT
     if len(state[symbol]["positions"]) < cfg["max_open"]:
         last_sell = state[symbol].get("last_sell_price")
         last_sell_time = state[symbol].get("last_sell_time", 0)
@@ -129,18 +143,20 @@ for symbol, cfg in CONFIG.items():
             breakout_price = last_sell * (1 + cfg["breakout_buy"])
             hours_since_sell = (now_ts - last_sell_time) / 3600 if last_sell_time else 999
             if price <= need_price:
-                print(f"BUY {symbol} DIP @ {price:.2f} - dip from {last_sell:.2f}")
+                print(f"BUY {symbol} DIP @ {price:.2f}")
             elif price >= breakout_price:
-                print(f"BUY {symbol} BREAKOUT @ {price:.2f} - up {((price-last_sell)/last_sell)*100:.2f}% from sell {last_sell:.2f}")
+                print(f"BUY {symbol} BREAKOUT @ {price:.2f} - up {((price-last_sell)/last_sell)*100:.2f}% from {last_sell:.2f}")
             elif hours_since_sell >= cfg["rebuy_timeout_h"]:
-                print(f"BUY {symbol} TIMEOUT @ {price:.2f} - waited {hours_since_sell:.1f}h, no dip")
+                print(f"BUY {symbol} TIMEOUT @ {price:.2f} - waited {hours_since_sell:.1f}h")
             else:
                 print(f"{symbol} NO BUY - last {last_sell:.2f}, now {price:.2f}, need < {need_price:.2f} OR > {breakout_price:.2f} OR wait {cfg['rebuy_timeout_h']}h (waited {hours_since_sell:.1f}h)")
                 continue
         print(f"BUY {symbol} 1 @ {price:.2f} - last sell was {last_sell}")
         try:
-            trading.submit_order(MarketOrderRequest(symbol=symbol, qty=1, side=OrderSide.BUY, time_in_force=TimeInForce.DAY))
-            state[symbol]["positions"].append({"entry": now_ts, "entry_price": price, "max_price": price})
+            order = trading.submit_order(MarketOrderRequest(symbol=symbol, qty=1, side=OrderSide.BUY, time_in_force=TimeInForce.DAY))
+            fill = get_fill_price(order.id) or price
+            print(f"BUY filled at {fill:.2f}")
+            state[symbol]["positions"].append({"entry": now_ts, "entry_price": fill, "max_price": fill})
             time.sleep(1)
         except Exception as e:
             print(f"Buy err {e}")
