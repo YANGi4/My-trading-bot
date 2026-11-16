@@ -5,9 +5,15 @@
     "last_sell_price": 354.59,
     "positions": [
       {
+<<<<<<< Updated upstream
         "entry": 1794853864.936064,
         "entry_price": 352.46,
         "max_price": 352.46
+=======
+        "entry": 1794854064.917546,
+        "entry_price": 352.26,
+        "max_price": 352.26
+>>>>>>> Stashed changes
       }
     ],
     "last_sell_time": 1794843330.255133
