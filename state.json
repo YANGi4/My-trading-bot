@@ -13,8 +13,8 @@
     "daily_pnl": 3.400870000000012,
     "last_sell_price": 215.78,
     "last_sell_time": 1795109133.44508,
-    "entry_price": null,
-    "max_price": null,
-    "entry_time": 0
+    "entry_price": 213.78,
+    "max_price": 213.78,
+    "entry_time": 1795111281.564247
   }
 }
