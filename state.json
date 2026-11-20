@@ -10,11 +10,11 @@
   },
   "TTWO": {
     "daily_date": "2026-11-20",
-    "daily_pnl": -5.16438,
-    "last_sell_price": 212.44,
-    "last_sell_time": 1795203333.878193,
-    "entry_price": 209.51,
-    "max_price": 209.67,
-    "entry_time": 1795204252.728949
+    "daily_pnl": -4.473889999999995,
+    "last_sell_price": 210.41,
+    "last_sell_time": 1795206051.565702,
+    "entry_price": null,
+    "max_price": null,
+    "entry_time": 0
   }
 }
