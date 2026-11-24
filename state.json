@@ -5,16 +5,16 @@
     "last_sell_price": 349.06,
     "last_sell_time": 1795445445.385281,
     "entry_price": 346.02,
-    "max_price": 346.02,
+    "max_price": 347.62,
     "entry_time": 1795530663.966
   },
   "TTWO": {
     "daily_date": "2026-11-24",
-    "daily_pnl": 0.0,
-    "last_sell_price": 211.46,
-    "last_sell_time": 1795464947.50188,
-    "entry_price": 209.24,
-    "max_price": 209.24,
-    "entry_time": 1795467045.465229
+    "daily_pnl": 1.2907,
+    "last_sell_price": 210.8,
+    "last_sell_time": 1795530937.849951,
+    "entry_price": null,
+    "max_price": null,
+    "entry_time": 0
   }
 }
