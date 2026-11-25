@@ -5,7 +5,7 @@
     "last_sell_price": 350.95,
     "last_sell_time": 1795531254.870966,
     "entry_price": 349.045,
-    "max_price": 349.045,
+    "max_price": 349.36,
     "entry_time": 1795617649.689293
   },
   "TTWO": {
@@ -14,7 +14,7 @@
     "last_sell_price": 220.29,
     "last_sell_time": 1795551934.094202,
     "entry_price": 216.53,
-    "max_price": 216.53,
+    "max_price": 216.575,
     "entry_time": 1795617344.349972
   }
 }
